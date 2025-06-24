@@ -1,38 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap');
+
 * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
+
+  font-family: "Atkinson Hyperlegible Mono", sans-serif;
+  font-optical-sizing: auto;
 }
 
 .horizontal-nav {
-    position: fixed;
-    background-color: rgb(80, 80, 80);
-    height: 100vh;
-    width: 3rem;
+  position: fixed;
+  background-color: rgb(80, 80, 80);
+  height: 100vh;
+  width: 3rem;
 }
 
 .horizontal-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 1rem;
-    gap: .5rem;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  gap: 0.5rem;
 }
 
 .horizontal-nav ul li:first-child {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 .horizontal-nav ul li a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 .horizontal-nav ul li a img {
-    width: 2rem;
-    height: 2rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .hidden {
-    display: none;
+  display: none;
+}
+
+.horizontal-nav .active {
+    border-bottom: 1px solid white;
 }
