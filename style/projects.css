@@ -1,0 +1,12 @@
+main {
+    margin-left: 3rem;
+    display: flex;
+    gap: 1rem;
+}
+
+section {
+    width: 10rem;
+    height: 10rem;
+    background-color: rgb(200, 200, 200);
+    border: 1px solid black;
+}

@@ -1,0 +1,38 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.horizontal-nav {
+    position: fixed;
+    background-color: rgb(80, 80, 80);
+    height: 100vh;
+    width: 3rem;
+}
+
+.horizontal-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    gap: .5rem;
+}
+
+.horizontal-nav ul li:first-child {
+    margin-bottom: 1rem;
+}
+.horizontal-nav ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.horizontal-nav ul li a img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.hidden {
+    display: none;
+}
