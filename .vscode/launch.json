@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "PasswordHasher",
+            "request": "launch",
+            "mainClass": "com.porto.porto.util.PasswordHasher",
+            "projectName": "porto"
+        },
+        {
+            "type": "java",
+            "name": "SecretKeyGenerator",
+            "request": "launch",
+            "mainClass": "com.porto.porto.util.SecretKeyGenerator",
+            "projectName": "porto"
+        },
+        {
+            "type": "java",
+            "name": "PortoApplication",
+            "request": "launch",
+            "mainClass": "com.porto.porto.util.PortoApplication",
+            "projectName": "porto"
+        },
+        {
+            "type": "java",
+            "name": "Launch Spring Boot",
+            "request": "launch",
+            "mainClass": "com.porto.porto.PortoApplication",
+            "projectName": "porto",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
