@@ -1,0 +1,45 @@
+.addTimelineEvent {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: #ebebeb;
+}
+
+.addTimelineEvent #add-event-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.addTimelineEvent #add-event-form .form-group {
+
+}
+
+.addTimelineEvent #add-event-form .form-group #yearPicker {
+    display: flex;
+    gap: 1px;
+    background: #cecece;
+}
+
+.addTimelineEvent #add-event-form .form-group #yearPicker .picker {
+    display: flex;
+    flex-direction: column;
+    background: #ebebeb;
+    width: 7rem;
+}
+
+.addTimelineEvent #add-event-form .form-group #yearPicker .picker span {
+    padding: 0 0.5rem;
+    display: flex;
+    justify-content: center;
+    font-weight: 100;
+}
+
+.addTimelineEvent #add-event-form .form-group #yearPicker .picker .main-option {
+    background: lightgray;
+    font-weight: 500;
+    padding: 0.5rem 0.5rem;
+}

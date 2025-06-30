@@ -1,19 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>DevPortfolio</title>
-    <link rel="stylesheet" href="/style/main.css" />
-  </head>
-  <body>
-    <div id="horizontal-nav"></div>
-    <main>
-      <div class="addTimelineEvent">
+    <link rel="stylesheet" href="/style/main.css"/>
+    <link rel="stylesheet" href="/style/timeline.css"/>
+</head>
+<body>
+<div id="horizontal-nav"></div>
+<main>
+    <div class="addTimelineEvent">
+        <form id="add-event-form" action="/api/admin/timeline/events" method="POST">
+            <div class="form-group">
+                <label for="eventName"></label>
+                <input type="text" id="eventName" name="eventName" placeholder="Event name" required>
+            </div>
+            <div class="form-group">
+                <label for="eventDescription">Description:</label>
+                <textarea id="eventDescription" name="eventDescription" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+<!--                year picker -->
+                <div id="yearPicker">
+                    <div id="year" class="picker">
+                        <span id="year-option0"></span>
+                        <span id="year-option1"></span>
+                        <span id="year-option2" class="main-option"></span>
+                        <span id="year-option3"></span>
+                        <span id="year-option4"></span>
+                    </div>
+                    <div id="month" class="picker">
+                        <span id="month-option0"></span>
+                        <span id="month-option1"></span>
+                        <span id="month-option2" class="main-option"></span>
+                        <span id="month-option3"></span>
+                        <span id="month-option4"></span>
+                    </div>
+                    <div id="day" class="picker">
+                        <span id="day-option0"></span>
+                        <span id="day-option1"></span>
+                        <span id="day-option2" class="main-option"></span>
+                        <span id="day-option3"></span>
+                        <span id="day-option4"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="eventEnd">End Date:</label>
+                <input type="date" id="eventEnd" name="eventEnd">
+            </div>
+            <div class="form-group">
+                <button type="submit">Add Event</button>
+            </div>
 
-      </div>
-    </main>
-    <script src="/scripts/main.js"></script>
-    <script src="/scripts/timeline.js"></script>
-  </body>
+        </form>
+    </div>
+</main>
+<script src="/scripts/main.js"></script>
+<script src="/scripts/timeline.js"></script>
+</body>
 </html>
