@@ -9,10 +9,21 @@
 }
 
 .horizontal-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   position: fixed;
   background-color: rgb(80, 80, 80);
   height: 100vh;
   width: 3rem;
+}
+
+.horizontal-nav #admin-toggle {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .horizontal-nav ul {
@@ -43,4 +54,52 @@
 
 .horizontal-nav .active {
     border-bottom: 1px solid white;
+}
+
+/*Custome timeline context menu*/
+#timeLineContextMenu {
+  position: absolute;
+  width: fit-content;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+}
+
+#timeLineContextMenu ul {
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  gap: 0;
+}
+
+#timeLineContextMenu ul li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #2B2B2BFF;
+  margin: 0;
+  width: 100%;
+  padding: 0.5rem .5rem 0.5rem 1rem;
+  font-size: small;
+  color: white;
+  cursor: pointer;
+}
+
+#timeLineContextMenu ul li p {
+  cursor: pointer;
+}
+
+#timeLineContextMenu ul li img {
+  width: 1.3rem;
+}
+
+#timeLineContextMenu ul li:first-child {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+#timeLineContextMenu ul li:last-child {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+#timeLineContextMenu ul li:hover {
+  background: #555555;
 }

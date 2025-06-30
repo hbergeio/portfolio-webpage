@@ -11,13 +11,17 @@ import java.util.Map;
 public class AuthController {
 
     @GetMapping("/api/auth/status")
-    public Map<String, Boolean> getAuthStatus() {
+    public Map<String, Object> getAuthStatus() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         boolean isAuthenticated = authentication != null &&
                 authentication.isAuthenticated() &&
                 !"anonymousUser".equals(authentication.getPrincipal());
 
-        return Map.of("isAdmin", isAuthenticated);
+        if (isAuthenticated) {
+            return Map.of("isAdmin", true, "username", authentication.getName());
+        } else {
+            return Map.of("isAdmin", false, "username", "");
+        }
     }
 }
