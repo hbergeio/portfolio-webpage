@@ -54,9 +54,13 @@ function setupUI(authData) {
                 if (isAdmin) {
                     opt.addEventListener("click", () => {
                         if (!window.location.pathname.includes("timeline")) {
-                            window.location.href = "/html/timeline.html"
+                            if (opt.id === "addOpt") {
+                                window.location.href = "/html/timeline.html#add_event"
+                            }
+                        } else {
+                            const addEvent = document.getElementsByClassName("addTimelineEvent")[0];
+                            addEvent.style.transform = "translateX(0rem)";
                         }
-                        console.log("clicked admin option")
                     })
                 }
             })

@@ -11,52 +11,46 @@
 <div id="horizontal-nav"></div>
 <main>
     <div class="addTimelineEvent">
-        <form id="add-event-form" action="/api/admin/timeline/events" method="POST">
+        <button class="close-btn" aria-label="Close">×</button>
+        <form id="add-event-form">
             <div class="form-group">
-                <label for="eventName"></label>
                 <input type="text" id="eventName" name="eventName" placeholder="Event name" required>
             </div>
             <div class="form-group">
-                <label for="eventDescription">Description:</label>
-                <textarea id="eventDescription" name="eventDescription" rows="4"></textarea>
+                <textarea id="eventDescription" name="eventDescription" rows="4" placeholder="Event description"></textarea>
             </div>
             <div class="form-group">
-<!--                year picker -->
-                <div id="yearPicker">
-                    <div id="year" class="picker">
-                        <span id="year-option0"></span>
-                        <span id="year-option1"></span>
-                        <span id="year-option2" class="main-option"></span>
-                        <span id="year-option3"></span>
-                        <span id="year-option4"></span>
-                    </div>
-                    <div id="month" class="picker">
-                        <span id="month-option0"></span>
-                        <span id="month-option1"></span>
-                        <span id="month-option2" class="main-option"></span>
-                        <span id="month-option3"></span>
-                        <span id="month-option4"></span>
-                    </div>
-                    <div id="day" class="picker">
-                        <span id="day-option0"></span>
-                        <span id="day-option1"></span>
-                        <span id="day-option2" class="main-option"></span>
-                        <span id="day-option3"></span>
-                        <span id="day-option4"></span>
-                    </div>
+                <p>Start date</p>
+                <div class="start_date_picker date-picker-container"></div>
+            </div>
+            <div class="form-group">
+                <div class="lasting">
+                    <label>
+                        End date
+                        <input id="lasting" name="isLasting" type="checkbox">
+                        <span class="checkmark expander-arrow"></span>
+                    </label>
                 </div>
+                <div class="end_date_picker date-picker-container hidden-date-picker"></div>
             </div>
-            <div class="form-group">
-                <label for="eventEnd">End Date:</label>
-                <input type="date" id="eventEnd" name="eventEnd">
-            </div>
-            <div class="form-group">
+            <div class="form-group" id="submit_discard">
                 <button type="submit">Add Event</button>
+                <button type="reset" id="reset-button">Reset</button>
             </div>
-
         </form>
     </div>
 </main>
+
+<template id="picker-template">
+    <div class="picker">
+        <span class="option third-option"></span>
+        <span class="option second-option"></span>
+        <span class="option main-option"></span>
+        <span class="option second-option"></span>
+        <span class="option third-option"></span>
+    </div>
+</template>
+
 <script src="/scripts/main.js"></script>
 <script src="/scripts/timeline.js"></script>
 </body>

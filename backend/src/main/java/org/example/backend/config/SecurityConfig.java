@@ -1,9 +1,10 @@
 package org.example.backend.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -14,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 
 @Configuration
@@ -24,6 +24,10 @@ public class SecurityConfig {
 
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
     private final CustomLoginSuccessHandler loginSuccessHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Value("${ADMIN_PASS}")
+    private String adminPass;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -39,7 +43,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         UserDetails admin = User.builder()
                 .username("admin")
-                .password(passwordEncoder().encode(System.getenv("ADMIN_PASS")))
+                .password(passwordEncoder().encode(adminPass))
                 .roles("ADMIN")
                 .build();
 
@@ -52,12 +56,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/", "/api/auth/status", "/index.html", "/style/**", "/scripts/**", "/assets/**", "/html/**").permitAll()
+                        .requestMatchers("/", "/login", "/logout", "/api/auth/status", "/index.html", "/style/**", "/scripts/**", "/assets/**", "/html/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .successHandler(loginSuccessHandler)
-                )
+                .formLogin(Customizer.withDefaults())
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
