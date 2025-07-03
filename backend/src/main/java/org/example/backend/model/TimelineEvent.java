@@ -9,28 +9,28 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@Table("timelineevents")
+@Table("TimelineEvents")
 public class TimelineEvent {
 
     @Id
-    @Column("eventid")
+    @Column("EventID")
     private Long eventId;
 
-    @Column("eventname")
+    @Column("EventName")
     private String eventName;
 
-    @Column("eventdescription")
+    @Column("EventDescription")
     private String eventDescription;
 
-    @Column("eventstart")
+    @Column("EventStart")
     private LocalDate eventStart;
 
-    @Column("eventend")
+    @Column("EventEnd")
     private LocalDate eventEnd;
 
-    @Column("createdat")
+    @Column("createdAt")
     private LocalDateTime createdAt;
 
-    @Column("updatedat")
+    @Column("updatedAt")
     private LocalDateTime updatedAt;
 }
