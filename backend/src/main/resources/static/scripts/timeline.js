@@ -1,9 +1,3 @@
-/**
- * Creates and manages a single scrollable picker unit (e.g., for day, month, or year).
- * @param {HTMLElement} container - The DOM element to render the picker into.
- * @param {object} config - Configuration for the picker's behavior.
- * @returns {object} - An object with methods to control the picker.
- */
 function createUnitPicker(container, config) {
     const template = document.getElementById('picker-template').content.cloneNode(true);
     container.appendChild(template);
@@ -11,7 +5,7 @@ function createUnitPicker(container, config) {
     const picker = container.querySelector('.picker');
     const options = picker.querySelectorAll('.option');
 
-    let { value, min, max, displayMap, scrollThreshold = 7 } = config;
+    let {value, min, max, displayMap, scrollThreshold = 7} = config;
     let scrollCount = 0;
 
     const updateDisplay = () => {
@@ -121,6 +115,82 @@ function initializeDatePicker(containerSelector) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Timeline design logic:
+    const timelineContainer = document.getElementById('timeline-container');
+    const timelineEventsContainer = document.getElementById('timeline-events');
+    const timelineContentDisplay = document.getElementById('timeline-content-display');
+    let currentlyActive = null;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (currentlyActive) {
+                    currentlyActive.classList.remove('active');
+                }
+                entry.target.classList.add('active');
+                currentlyActive = entry.target;
+
+                const activeChangeEvent = new CustomEvent('timeline:active-change', {
+                    bubbles: true,
+                    detail: {
+                        activeElement: currentlyActive
+                    }
+                });
+                timelineContainer.dispatchEvent(activeChangeEvent);
+            }
+        });
+    }, {
+        root: timelineContainer,
+        rootMargin: "-50% 0px -50% 0px",
+        threshold: 0
+    });
+
+    fetch("/api/timeline/events")
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(events => {
+            events.sort((a, b) => new Date(a.eventStart) - new Date(b.eventStart));
+
+            timelineEventsContainer.innerHTML = '';
+            timelineContentDisplay.innerHTML = '';
+
+
+
+            events.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.className = 'timeline-event';
+
+                const endDate = event.eventEnd ? ' - ' + event.eventEnd : '';
+
+                eventElement.innerHTML = `<p>${event.eventStart}</p>`;
+                eventElement.dataset.eName = event.eventName;
+                eventElement.dataset.eDesc = event.eventDescription;
+                eventElement.dataset.eDate = event.eventStart + endDate;
+
+                timelineEventsContainer.appendChild(eventElement);
+
+                observer.observe(eventElement);
+            });
+
+            document.body.addEventListener('timeline:active-change', (event) => {
+                timelineContentDisplay.innerHTML = `
+                    <div class="top">
+                        <h2>${currentlyActive.dataset.eName}</h2>
+                        <p>${currentlyActive.dataset.eDate}</p>
+                    </div>
+                    <p>${currentlyActive.dataset.eDesc}</p>
+                `
+            });
+        })
+        .catch(error => {
+            console.error("Failed to fetch or build timeline:", error);
+            timelineEventsContainer.innerHTML = '<p style="color: red;">Could not load timeline events.</p>';
+        });
+
+
+// Add event logic:
     const addEventPanel = document.querySelector(".addTimelineEvent");
     const closeBtn = document.querySelector(".close-btn");
     const form = document.getElementById('add-event-form');
@@ -135,6 +205,55 @@ document.addEventListener("DOMContentLoaded", () => {
     closeBtn.addEventListener("click", () => {
         addEventPanel.style.transform = "translateX(-22rem)";
     });
+
+    const slider = document.getElementById('importance');
+    const label = document.getElementById('thumb-label');
+
+    function updateLabel() {
+        const value = slider.value;
+        const min = slider.min;
+        const max = slider.max;
+        const percent = (value - min) / (max - min);
+
+        const sliderWidth = slider.offsetWidth;
+
+        const thumbWidth = 32;
+        const offset = thumbWidth / 2;
+
+        const labelLeft = percent * (sliderWidth - thumbWidth) + offset;
+
+        label.textContent = value;
+        label.style.left = `${labelLeft}px`;
+    }
+
+    let isDragging = false;
+
+    slider.addEventListener('input', updateLabel);
+    slider.addEventListener('mousedown', () => {
+        isDragging = true;
+        label.classList.add('dragging');
+    });
+    slider.addEventListener('mouseup', () => {
+        isDragging = false;
+        label.classList.remove('dragging');
+    });
+    slider.addEventListener('mouseleave', () => {
+        label.classList.remove('hovered');
+    });
+    slider.addEventListener('mouseenter', () => {
+        if (!isDragging) label.classList.add('hovered');
+    });
+    slider.addEventListener('blur', () => {
+        label.classList.remove('dragging', 'hovered');
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        label.classList.remove('dragging');
+    });
+
+    slider.addEventListener('input', updateLabel);
+    updateLabel();
 
     const startDatePicker = initializeDatePicker('.start_date_picker');
     const endDatePicker = initializeDatePicker('.end_date_picker');
@@ -160,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
             eventDescription: form.eventDescription.value,
             eventStart: startDateStr,
             eventEnd: endDateStr,
+            eventImportance: parseInt(form.importance.value, 10)
         };
 
         console.log("Validation successful! Data to send:", eventData);
@@ -197,4 +317,5 @@ document.addEventListener("DOMContentLoaded", () => {
         lastingCheckbox.checked = false;
         endDateContainer.classList.add('hidden-date-picker');
     });
-});
+})
+;

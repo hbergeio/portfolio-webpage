@@ -4,5 +4,6 @@ public record TimelineEventDTO(
         String eventName,
         String eventDescription,
         String eventStart,
-        String eventEnd
+        String eventEnd,
+        Integer eventImportance
 ) {}

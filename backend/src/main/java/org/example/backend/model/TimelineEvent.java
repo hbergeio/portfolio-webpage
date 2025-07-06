@@ -28,6 +28,9 @@ public class TimelineEvent {
     @Column("EventEnd")
     private LocalDate eventEnd;
 
+    @Column("EventImportance")
+    private Integer eventImportance;
+
     @Column("createdAt")
     private LocalDateTime createdAt;
 

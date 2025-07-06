@@ -13,7 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/admin/timeline")
 @RequiredArgsConstructor
-public class TimelineEventController {
+public class TimelineAdminEventController {
 
     private final TimelineEventService eventService;
 
